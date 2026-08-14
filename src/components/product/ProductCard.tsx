@@ -1,3 +1,6 @@
+"use client";
+import Link from "next/link";
+import { useCart } from "@/context/CartContext";
 import type { Product } from "./productData";
 
 type ProductCardProps = {
@@ -5,6 +8,7 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart();
   return (
     <article className="overflow-hidden rounded-2xl border border-border bg-warm-white transition duration-300 hover:-translate-y-1 hover:shadow-lg">
       <div className="flex h-52 items-center justify-center bg-cream text-7xl">
@@ -19,7 +23,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             </p>
 
             <h3 className="mt-2 text-xl font-semibold text-coffee-dark">
-              {product.name}
+              <Link
+                href={`/menu/${product.id}`}
+                className="transition hover:text-caramel"
+              >
+                {product.name}
+              </Link>
             </h3>
           </div>
 
@@ -32,6 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <button
           type="button"
+          onClick={() => addToCart(product)}
           className="mt-5 w-full rounded-full bg-coffee-dark px-5 py-3 text-sm font-semibold text-warm-white transition hover:bg-coffee"
         >
           Add to Cart
