@@ -2,6 +2,9 @@
 // Next.js provides: Link for navigation between pages.
 import Link from "next/link";
 import Categories from "@/components/home/Categories"; //@/ ->epresents the project's source/root path
+import Products from "@/components/product/Products";
+import WhyCafeIn from "@/components/home/WhyCafeIn";
+import HomeCTA from "@/components/home/HomeCTA";
 export default function Home() {
   return (
     <main>
@@ -44,6 +47,9 @@ export default function Home() {
         </div>
       </section>
       <Categories />
+      <Products />
+      <WhyCafeIn />
+      <HomeCTA />
     </main>
   );
 }
