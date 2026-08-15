@@ -147,3 +147,136 @@ Why CAFE-!N
 CTA
 ↓
 Footer
+
+DAY3
+DAY 3
+│
+├── /menu
+│ ├── Menu page
+│ ├── Category filtering
+│ └── Product grid
+│
+├── /menu/[id]
+│ └── Dynamic product details
+│
+├── /about
+│ └── About page
+│
+├── Cart System
+│ ├── CartContext
+│ ├── Add to Cart
+│ ├── Remove
+│ ├── Increase quantity
+│ ├── Decrease quantity
+│ └── localStorage persistence
+│
+├── /cart
+│ └── Cart + Order Summary
+│
+├── /checkout
+│ ├── Customer information
+│ ├── Order summary
+│ ├── Form state
+│ └── Frontend validation
+│
+├── /order-success
+│ └── Order confirmation UI
+│
+└── Order Type
+└── Prepared frontend order structure
+
+HOME
+↓
+MENU
+↓
+PRODUCT DETAILS
+↓
+ADD TO CART
+↓
+CART
+↓
+QUANTITY / REMOVE
+↓
+CHECKOUT
+↓
+VALIDATION
+↓
+ORDER OBJECT
+DAY 3 IMPLEMENTATION
+
+Feature 1
+Menu Page
+
+- File:
+- Components used:
+- Data used:
+- Functionality:
+- Dependencies:
+
+Feature 2
+Product Details
+
+- Route:
+- Dynamic parameter:
+- Data lookup:
+- Error handling:
+
+Feature 3
+Cart
+
+- Context:
+- State:
+- Actions:
+- Persistence:
+
+Feature 4
+Checkout
+
+- Form state:
+- Validation:
+- Order object:
+
+Feature 5
+Order Success
+
+- Route:
+- Current purpose:
+- Future backend connection:
+
+src/
+│
+├── app/
+│ ├── page.tsx
+│ ├── layout.tsx
+│ │
+│ ├── about/
+│ │ └── page.tsx
+│ │
+│ ├── menu/
+│ │ ├── page.tsx
+│ │ └── [id]/
+│ │ └── page.tsx
+│ │
+│ ├── cart/
+│ │ └── page.tsx
+│ │
+│ ├── checkout/
+│ │ └── page.tsx
+│ │
+│ └── order-success/
+│ └── page.tsx
+│
+├── components/
+│ ├── home/
+│ ├── layout/
+│ └── product/
+│ ├── ProductCard.tsx
+│ ├── ProductFilters.tsx
+│ ├── AddToCartButton.tsx
+│ └── productData.ts
+│
+├── context/
+│ └── CartContext.tsx
+│
+└── types/
+└── order.ts

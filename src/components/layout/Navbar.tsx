@@ -28,17 +28,17 @@ export default function Navbar() {
             Menu
           </Link>
           <Link
-            href="/cart"
-            className="text-sm font-semibold text-caramel hover:text-coffee"
-          >
-            Cart: {cartCount}
-          </Link>
-
-          <Link
             href="/about"
             className="text-sm font-medium text-coffee hover:text-caramel"
           >
             About
+          </Link>
+          <Link
+            href="/cart"
+            className="flex items-center gap-2 text-sm font-semibold text-caramel transition hover:text-coffee"
+          >
+            <span>🛒</span>
+            <span>Cart ({cartCount})</span>
           </Link>
         </div>
       </nav>

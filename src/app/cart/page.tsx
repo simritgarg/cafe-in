@@ -24,12 +24,21 @@ export default function CartPage() {
         </h1>
 
         {cartItems.length === 0 ? (
-          <div className="mt-12 rounded-3xl border border-border bg-warm-white p-10 text-center">
-            <p className="text-lg text-muted">Your cart is empty.</p>
+          <div className="mt-12 rounded-3xl border border-border bg-warm-white p-12 text-center">
+            <div className="text-6xl">🛒</div>
+
+            <h2 className="mt-6 text-2xl font-semibold text-coffee-dark">
+              Your cart is waiting.
+            </h2>
+
+            <p className="mx-auto mt-3 max-w-md text-muted">
+              Looks like you haven't added anything yet. Explore our menu and
+              find something you'll love.
+            </p>
 
             <Link
               href="/menu"
-              className="mt-6 inline-block rounded-full bg-coffee-dark px-6 py-3 text-sm font-semibold text-warm-white transition hover:bg-coffee"
+              className="mt-8 inline-block rounded-full bg-coffee-dark px-6 py-3 text-sm font-semibold text-warm-white transition hover:bg-coffee"
             >
               Explore Menu
             </Link>
@@ -115,12 +124,12 @@ export default function CartPage() {
                 </span>
               </div>
 
-              <button
-                type="button"
-                className="mt-6 w-full rounded-full bg-coffee-dark px-5 py-3 text-sm font-semibold text-warm-white transition hover:bg-coffee"
+              <Link
+                href="/checkout"
+                className="mt-6 block w-full rounded-full bg-coffee-dark px-5 py-3 text-center text-sm font-semibold text-warm-white transition hover:bg-coffee"
               >
                 Proceed to Checkout
-              </button>
+              </Link>
             </aside>
           </div>
         )}
