@@ -1,19 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import type { Order } from "@/types/order";
 
 export default function CheckoutPage() {
-  const { cartItems } = useCart();
+  const router = useRouter();
+  const { cartItems, clearCart } = useCart();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     address: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
@@ -51,6 +55,7 @@ export default function CheckoutPage() {
       setError("Please enter your delivery address.");
       return;
     }
+    setIsSubmitting(true);
 
     const order: Order = {
       id: `CAFE-${Date.now()}`,
@@ -69,7 +74,11 @@ export default function CheckoutPage() {
       createdAt: new Date().toISOString(),
     };
 
-    console.log("Order created:", order);
+    localStorage.setItem("cafe-in-last-order", JSON.stringify(order));
+
+    clearCart();
+
+    router.push(`/order-success?orderId=${order.id}`);
   }
 
   const total = cartItems.reduce(
@@ -242,9 +251,10 @@ export default function CheckoutPage() {
             <button
               type="button"
               onClick={handlePlaceOrder}
-              className="mt-8 w-full rounded-full bg-coffee-dark px-5 py-3 font-semibold text-white transition hover:bg-coffee"
+              disabled={isSubmitting}
+              className="mt-8 w-full rounded-full bg-coffee-dark px-5 py-3 font-semibold text-white transition hover:bg-coffee disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Place Order
+              {isSubmitting ? "Placing Order..." : "Place Order"}
             </button>
           </aside>
         </div>
