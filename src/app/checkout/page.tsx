@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import type { Order } from "@/types/order";
+// import type { Order } from "@/types/order";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -28,7 +28,59 @@ export default function CheckoutPage() {
       [name]: value,
     }));
   }
-  function handlePlaceOrder() {
+  // function handlePlaceOrder() {
+  //   setError("");
+
+  //   if (!formData.name.trim()) {
+  //     setError("Please enter your name.");
+  //     return;
+  //   }
+
+  //   if (!formData.email.trim()) {
+  //     setError("Please enter your email.");
+  //     return;
+  //   }
+
+  //   if (!formData.email.includes("@")) {
+  //     setError("Please enter a valid email address.");
+  //     return;
+  //   }
+
+  //   if (!formData.phone.trim()) {
+  //     setError("Please enter your phone number.");
+  //     return;
+  //   }
+
+  //   if (!formData.address.trim()) {
+  //     setError("Please enter your delivery address.");
+  //     return;
+  //   }
+  //   setIsSubmitting(true);
+
+  //   const order: Order = {
+  //     id: `CAFE-${Date.now()}`,
+  //     customer: {
+  //       name: formData.name,
+  //       email: formData.email,
+  //       phone: formData.phone,
+  //       address: formData.address,
+  //     },
+  //     items: cartItems.map((item) => ({
+  //       product: item,
+  //       quantity: item.quantity,
+  //     })),
+  //     total,
+  //     status: "pending",
+  //     createdAt: new Date().toISOString(),
+  //   };
+
+  //   localStorage.setItem("cafe-in-last-order", JSON.stringify(order));
+
+  //   clearCart();
+
+  //   router.push(`/order-success?orderId=${order.id}`);
+  // }
+  async function handlePlaceOrder() {
     setError("");
 
     if (!formData.name.trim()) {
@@ -55,30 +107,51 @@ export default function CheckoutPage() {
       setError("Please enter your delivery address.");
       return;
     }
+
     setIsSubmitting(true);
 
-    const order: Order = {
-      id: `CAFE-${Date.now()}`,
-      customer: {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-      },
-      items: cartItems.map((item) => ({
-        product: item,
-        quantity: item.quantity,
-      })),
-      total,
-      status: "pending",
-      createdAt: new Date().toISOString(),
-    };
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: cartItems.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+          })),
+        }),
+      });
 
-    localStorage.setItem("cafe-in-last-order", JSON.stringify(order));
+      if (!response.ok) {
+        throw new Error("Failed to place order.");
+      }
 
-    clearCart();
+      const order = await response.json();
 
-    router.push(`/order-success?orderId=${order.id}`);
+      localStorage.setItem(
+        "cafe-in-last-order",
+        JSON.stringify({
+          ...order,
+          customer: formData,
+          items: cartItems.map((item) => ({
+            product: item,
+            quantity: item.quantity,
+          })),
+        }),
+      );
+
+      clearCart();
+
+      router.push(`/order-success?orderId=${order.id}`);
+    } catch (error) {
+      console.error("Order placement failed:", error);
+      setError(
+        "Something went wrong while placing your order. Please try again.",
+      );
+      setIsSubmitting(false);
+    }
   }
 
   const total = cartItems.reduce(
