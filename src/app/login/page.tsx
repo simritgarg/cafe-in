@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const router = useRouter();
+  //   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +38,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/");
+      window.location.href = "/";
     } catch (error) {
       console.error("Login failed:", error);
       setError("Something went wrong. Please try again.");
