@@ -280,3 +280,317 @@ src/
 │
 └── types/
 └── order.ts
+
+# Day 4 — Database & Backend
+
+## What We Built
+
+- Connected the application to PostgreSQL.
+- Added Prisma ORM.
+- Created the database schema.
+- Created User model.
+- Created Product model.
+- Created Order model.
+- Created OrderItem model.
+- Established relationships between database entities.
+- Connected products from the database to the application.
+- Created product API routes.
+- Created order API routes.
+- Connected checkout to the backend.
+- Created real database orders instead of frontend-only order objects.
+- Added support for registered users and guest orders.
+
+## Database Structure
+
+```text
+User
+ │
+ └── Order
+       │
+       └── OrderItem
+              │
+              └── Produ
+```
+
+Main Entities
+User
+
+Stores customer account information and admin role information.
+
+Product
+
+Stores cafe products such as drinks and food items.
+
+Order
+
+Stores customer orders, totals, status, and creation time.
+
+OrderItem
+
+Stores the products and quantities belonging to an order.
+
+What We Learned
+Prisma
+Prisma schema
+Models
+Relations
+Prisma Client
+Database queries
+findUnique
+findMany
+create
+update
+Nested relations
+Backend Development
+API routes
+GET requests
+POST requests
+PATCH requests
+Request validation
+JSON responses
+Server-side database operations
+Architecture
+
+The project changed from a primarily frontend application into a full-stack application.
+
+Frontend
+↓
+API Routes
+↓
+Prisma
+↓
+PostgreSQL
+Day 5 — Authentication & Authorization
+What We Built
+User registration.
+User login.
+User logout.
+Session-based authentication.
+JWT-based sessions.
+HTTP-only session cookie.
+Protected account functionality.
+Current-user API endpoint.
+Customer order history.
+Admin role support.
+Admin-only access control.
+Access-denied page.
+Authentication Flow
+User
+↓
+Login
+↓
+Server verifies credentials
+↓
+Password verification
+↓
+JWT session created
+↓
+HTTP-only cookie
+↓
+Protected API / Pages
+↓
+Server verifies session
+↓
+User access granted
+Authorization
+
+The application distinguishes between:
+
+Customer
+↓
+Customer features
+
+Admin
+↓
+Customer features
+
+- Admin features
+
+Admin routes verify that the authenticated user has the required admin role.
+
+Unauthorized users are redirected to the access-denied page.
+
+Security Concepts Learned
+Password Hashing
+
+Passwords are not stored as plain text.
+
+Instead, passwords are securely hashed before being stored in the database.
+
+HTTP-only Session Cookie
+
+The authentication session is stored in an HTTP-only cookie.
+
+This prevents client-side JavaScript from directly accessing the session cookie.
+
+Server-side Verification
+
+Protected functionality verifies the authenticated user on the server instead of trusting only frontend state.
+
+What We Learned
+Authentication vs authorization
+Sessions
+JWT
+HTTP-only cookies
+Password hashing
+Protected routes
+Role-based access control
+Server-side authentication checks
+Day 6 — Admin Order Management & Version 1
+What We Built
+Admin dashboard.
+Protected admin area.
+Admin orders page.
+Individual admin order details page.
+Customer information display.
+Order item display.
+Order totals.
+Order status management.
+Order status updates through the backend.
+Guest customer support.
+Registered customer support.
+Access-denied page.
+Production build verification.
+Admin Order Flow
+Admin Login
+↓
+Admin Access Check
+↓
+Admin Orders
+↓
+View All Orders
+↓
+Select Order
+↓
+Order Details
+↓
+Update Status
+Order Statuses
+
+Orders support the following statuses:
+
+PENDING
+↓
+PREPARING
+↓
+READY
+↓
+COMPLETED
+
+Orders can also be marked:
+
+CANCELLED
+Admin Capabilities
+
+Administrators can:
+
+View all orders.
+View customer information.
+View ordered products.
+View quantities.
+View order totals.
+View order creation time.
+Change order status.
+Production Verification
+
+The application was tested using:
+
+npm run build
+
+The production build completed successfully.
+
+The application can also be started using:
+
+npm run start
+Version 1 Completed
+
+CAFE-!N Version 1 now contains:
+
+Frontend
+↓
+Menu
+↓
+Product Details
+↓
+Cart
+↓
+Checkout
+↓
+Order Creation
+↓
+PostgreSQL Database
+↓
+Authentication
+↓
+Customer Account
+↓
+Order History
+↓
+Admin Dashboard
+↓
+Order Management
+Version 1 Final Feature Set
+Customer
+Homepage
+Menu
+Category filtering
+Product details
+Add to cart
+Quantity controls
+Persistent cart
+Cart page
+Checkout
+Order creation
+Order confirmation
+Registration
+Login
+Logout
+Account page
+Order history
+Backend
+PostgreSQL
+Prisma ORM
+Product API
+Order API
+Authentication API
+Database relationships
+Server-side validation
+Authentication
+JWT sessions
+HTTP-only cookies
+Password hashing
+Protected routes
+Role-based authorization
+Admin
+Admin dashboard
+Protected admin routes
+Order management
+Order details
+Customer information
+Order status updates
+Access-denied page
+Final Architecture
+CAFE-!N
+│
+├── Frontend
+│ ├── Next.js
+│ ├── React
+│ ├── TypeScript
+│ └── Tailwind CSS
+│
+├── Backend
+│ ├── Next.js API Routes
+│ ├── Authentication
+│ └── Authorization
+│
+├── Database
+│ ├── PostgreSQL
+│ └── Prisma
+│
+└── Application Features
+├── Customer Ordering
+├── Cart
+├── Checkout
+├── Authentication
+├── Order History
+└── Admin Order Management
