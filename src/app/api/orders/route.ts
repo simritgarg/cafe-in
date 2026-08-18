@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { verifySession } from "@/lib/session";
+import { getCurrentUser } from "@/lib/session";
 
 type OrderRequestItem = {
   productId: number;
@@ -11,7 +12,13 @@ type OrderRequestItem = {
 type OrderRequest = {
   items: OrderRequestItem[];
 };
+
 export async function GET() {
+  const user = await getCurrentUser();
+
+  if (!user || !user.isAdmin) {
+    return Response.json({ error: "Admin access required" }, { status: 403 });
+  }
   try {
     const orders = await prisma.order.findMany({
       orderBy: {
