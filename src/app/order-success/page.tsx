@@ -185,13 +185,13 @@
 //   );
 // }
 "use client";
-
+import { Suspense } from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import type { Order } from "@/types/order";
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
 
@@ -392,5 +392,30 @@ export default function OrderSuccessPage() {
         </div>
       </div>
     </main>
+  );
+}
+export default function OrderSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-cream px-6 py-20">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-caramel">
+              Order
+            </p>
+
+            <h1 className="mt-4 text-4xl font-bold text-coffee-dark">
+              Loading your order...
+            </h1>
+
+            <p className="mt-4 text-muted">
+              Just a moment while we retrieve your order details.
+            </p>
+          </div>
+        </main>
+      }
+    >
+      <OrderSuccessContent />
+    </Suspense>
   );
 }

@@ -22,6 +22,14 @@ type User = {
   phone: string | null;
 } | null;
 
+type CurrentUser = {
+  id: number;
+  name: string;
+  email: string;
+  phone: string | null;
+  isAdmin: boolean;
+};
+
 type Order = {
   id: string;
   total: number;
@@ -34,28 +42,50 @@ type Order = {
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    async function fetchOrders() {
+    async function loadAdminOrders() {
       try {
-        const response = await fetch("/api/orders");
-        const data = await response.json();
+        const userResponse = await fetch("/api/auth/me");
+
+        if (!userResponse.ok) {
+          window.location.href = "/login";
+          return;
+        }
+
+        const user: CurrentUser = await userResponse.json();
+
+        if (!user.isAdmin) {
+          window.location.href = "/access-denied";
+          return;
+        }
+
+        setCheckingAuth(false);
+
+        const ordersResponse = await fetch("/api/orders");
+
+        if (!ordersResponse.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+
+        const data = await ordersResponse.json();
 
         setOrders(data);
       } catch (error) {
-        console.error("Failed to fetch orders:", error);
+        console.error("Failed to load admin orders:", error);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchOrders();
+    loadAdminOrders();
   }, []);
 
-  if (loading) {
+  if (checkingAuth || loading) {
     return (
       <main className="min-h-screen px-6 py-10">
-        <p>Loading orders...</p>
+        <p>Checking admin access...</p>
       </main>
     );
   }
